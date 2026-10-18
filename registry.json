@@ -1,0 +1,78 @@
+{
+  "$schema": "https://framer-motion-book.dev/schema.json",
+  "name": "framer-motion-book",
+  "version": "1.0.0",
+  "categories": [
+    {
+      "id": "micro-interactions",
+      "name": "Micro-Interactions",
+      "description": "Tactile, springy buttons, switches, tabs, and interactive cursor tilts",
+      "components": [
+        {
+          "name": "MagneticButton",
+          "file": "components/motion/micro/MagneticButton.tsx",
+          "dependencies": ["framer-motion"],
+          "description": "Magnetic button that gently attracts toward the cursor on hover"
+        },
+        {
+          "name": "AnimatedTabs",
+          "file": "components/motion/micro/AnimatedTabs.tsx",
+          "dependencies": ["framer-motion"],
+          "description": "Smooth pill active indicator gliding between tab choices using layoutId"
+        }
+      ]
+    },
+    {
+      "id": "layout-transitions",
+      "name": "Layout & Shared Elements",
+      "description": "Zero-jank FLIP transitions and shared element expansions",
+      "components": [
+        {
+          "name": "SharedElementGallery",
+          "file": "components/motion/layout/SharedElementGallery.tsx",
+          "dependencies": ["framer-motion"],
+          "description": "Grid cards that expand seamlessly into full-page detailed modal overlays"
+        }
+      ]
+    },
+    {
+      "id": "scroll-driven",
+      "name": "Scroll-Driven & Parallax",
+      "description": "Passive, 120 FPS RAF-batched scroll progress scrubbers and parallax layers",
+      "components": [
+        {
+          "name": "ParallaxHero",
+          "file": "components/motion/scroll/ParallaxHero.tsx",
+          "dependencies": ["framer-motion"],
+          "description": "Cinematic hero with sticky reading progress and multi-depth parallax"
+        }
+      ]
+    },
+    {
+      "id": "typography",
+      "name": "Typography & Text Staggers",
+      "description": "Split character, typewriter, and scramble text reveals",
+      "components": [
+        {
+          "name": "SplitTextReveal",
+          "file": "components/motion/typography/SplitTextReveal.tsx",
+          "dependencies": ["framer-motion"],
+          "description": "Staggered letter entrance animation with viewport trigger"
+        }
+      ]
+    },
+    {
+      "id": "overlays",
+      "name": "Dialogs & Overlays",
+      "description": "Spring-animated modals and popovers with AnimatePresence exit transitions",
+      "components": [
+        {
+          "name": "SpringModal",
+          "file": "components/motion/overlays/SpringModal.tsx",
+          "dependencies": ["framer-motion"],
+          "description": "Modal with backdrop blur and spring scale entrance and exit"
+        }
+      ]
+    }
+  ]
+}
