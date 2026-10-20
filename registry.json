@@ -6,71 +6,175 @@
     {
       "id": "micro-interactions",
       "name": "Micro-Interactions",
-      "description": "Tactile, springy buttons, switches, tabs, and interactive cursor tilts",
+      "description": "Tactile, springy buttons, switches, tabs, and magnetic cursor physics",
       "components": [
         {
           "name": "MagneticButton",
+          "category": "micro-interactions",
           "file": "components/motion/micro/MagneticButton.tsx",
-          "dependencies": ["framer-motion"],
-          "description": "Magnetic button that gently attracts toward the cursor on hover"
+          "description": "Button that magnetically attracts toward the cursor on hover and snaps back with elastic spring physics.",
+          "tags": ["magnetic", "cursor", "spring", "button"]
         },
         {
           "name": "AnimatedTabs",
+          "category": "micro-interactions",
           "file": "components/motion/micro/AnimatedTabs.tsx",
-          "dependencies": ["framer-motion"],
-          "description": "Smooth pill active indicator gliding between tab choices using layoutId"
+          "description": "Figma/Apple-style sliding pill active indicator that glides between tab options using layoutId.",
+          "tags": ["tabs", "layoutId", "navigation", "pill"]
+        },
+        {
+          "name": "SpringToggle",
+          "category": "micro-interactions",
+          "file": "components/motion/micro/SpringToggle.tsx",
+          "description": "Tactile switch toggle with overshoot spring dampening and glowing active state.",
+          "tags": ["switch", "toggle", "spring", "ui"]
+        },
+        {
+          "name": "ShimmerGlowButton",
+          "category": "micro-interactions",
+          "file": "components/motion/micro/ShimmerGlowButton.tsx",
+          "description": "High-end CTA button with continuous rotating conic border light streak on hover.",
+          "tags": ["button", "glow", "conic", "shimmer"]
+        },
+        {
+          "name": "HoldConfirmButton",
+          "category": "micro-interactions",
+          "file": "components/motion/micro/HoldConfirmButton.tsx",
+          "description": "Destructive or critical action trigger with smooth radial progress charge on hold.",
+          "tags": ["button", "hold", "confirmation", "progress"]
+        }
+      ]
+    },
+    {
+      "id": "cards-3d",
+      "name": "Cards & 3D Tilt",
+      "description": "Perspective shifts, specular lighting reflections, and interactive spotlight cards",
+      "components": [
+        {
+          "name": "TiltCard3D",
+          "category": "cards-3d",
+          "file": "components/motion/micro/TiltCard.tsx",
+          "description": "Card with interactive 3D perspective tilt calculated from mouse position and specular glare overlay.",
+          "tags": ["3d", "perspective", "tilt", "card"]
+        },
+        {
+          "name": "SpotlightGlowCard",
+          "category": "cards-3d",
+          "file": "components/motion/micro/SpotlightGlowCard.tsx",
+          "description": "Vercel/Linear style dark card where cursor position illuminates an ambient radial spotlight halo.",
+          "tags": ["spotlight", "glow", "card", "mouse"]
         }
       ]
     },
     {
       "id": "layout-transitions",
-      "name": "Layout & Shared Elements",
-      "description": "Zero-jank FLIP transitions and shared element expansions",
+      "name": "Layout & Morphing",
+      "description": "Zero-jank FLIP transitions, auto-height accordions, and shared element expansions",
       "components": [
+        {
+          "name": "ExpandableMorphCard",
+          "category": "layout-transitions",
+          "file": "components/motion/layout/ExpandableCardList.tsx",
+          "description": "Compact grid card that morphs seamlessly into a full modal details view using layoutId.",
+          "tags": ["morph", "layoutId", "expandable", "card"]
+        },
+        {
+          "name": "AccordionSpring",
+          "category": "layout-transitions",
+          "file": "components/motion/layout/AccordionSpring.tsx",
+          "description": "Accordion item that smoothly springs open to height: auto without content clipping or jerky reflows.",
+          "tags": ["accordion", "height-auto", "spring", "faq"]
+        },
         {
           "name": "SharedElementGallery",
+          "category": "layout-transitions",
           "file": "components/motion/layout/SharedElementGallery.tsx",
-          "dependencies": ["framer-motion"],
-          "description": "Grid cards that expand seamlessly into full-page detailed modal overlays"
+          "description": "Connected image thumbnail expansion into high-res hero lightbox with coordinated text stagger.",
+          "tags": ["gallery", "shared-element", "lightbox", "morph"]
         }
       ]
     },
     {
-      "id": "scroll-driven",
-      "name": "Scroll-Driven & Parallax",
-      "description": "Passive, 120 FPS RAF-batched scroll progress scrubbers and parallax layers",
+      "id": "navigation-docks",
+      "name": "Navigation & Islands",
+      "description": "macOS dynamic dock magnification and Apple Dynamic Island morphing pills",
       "components": [
         {
-          "name": "ParallaxHero",
-          "file": "components/motion/scroll/ParallaxHero.tsx",
-          "dependencies": ["framer-motion"],
-          "description": "Cinematic hero with sticky reading progress and multi-depth parallax"
+          "name": "MagnificationDock",
+          "category": "navigation-docks",
+          "file": "components/motion/gestures/MagnificationDock.tsx",
+          "description": "macOS dock menu where icon sizes scale based on continuous distance from the cursor.",
+          "tags": ["dock", "macos", "magnification", "distance"]
+        },
+        {
+          "name": "DynamicIslandPill",
+          "category": "navigation-docks",
+          "file": "components/motion/layout/DynamicIslandPill.tsx",
+          "description": "iPhone 16 Pro Dynamic Island that morphs smoothly between compact pill, notification, and media player.",
+          "tags": ["dynamic-island", "morph", "pill", "ios"]
         }
       ]
     },
     {
-      "id": "typography",
-      "name": "Typography & Text Staggers",
-      "description": "Split character, typewriter, and scramble text reveals",
+      "id": "gestures-touch",
+      "name": "Gestures & Physics",
+      "description": "Drag-to-dismiss cards, pan gestures, and velocity-based fling releases",
       "components": [
         {
-          "name": "SplitTextReveal",
-          "file": "components/motion/typography/SplitTextReveal.tsx",
-          "dependencies": ["framer-motion"],
-          "description": "Staggered letter entrance animation with viewport trigger"
+          "name": "SwipeDismissCard",
+          "category": "gestures-touch",
+          "file": "components/motion/gestures/SwipeDismissCard.tsx",
+          "description": "Swipeable notification card with elastic pull resistance and threshold fling release.",
+          "tags": ["swipe", "dismiss", "drag", "pan"]
         }
       ]
     },
     {
-      "id": "overlays",
-      "name": "Dialogs & Overlays",
-      "description": "Spring-animated modals and popovers with AnimatePresence exit transitions",
+      "id": "overlays-feedback",
+      "name": "Overlays & Feedback",
+      "description": "Spring-animated dialogs, backdrop blurs, and stacked toast notification queues",
       "components": [
         {
           "name": "SpringModal",
+          "category": "overlays-feedback",
           "file": "components/motion/overlays/SpringModal.tsx",
-          "dependencies": ["framer-motion"],
-          "description": "Modal with backdrop blur and spring scale entrance and exit"
+          "description": "Dialog with backdrop blur and bouncy spring scale entrance and exit with AnimatePresence.",
+          "tags": ["modal", "dialog", "backdrop", "spring"]
+        },
+        {
+          "name": "StackedToastQueue",
+          "category": "overlays-feedback",
+          "file": "components/motion/feedback/StackedToastQueue.tsx",
+          "description": "Dynamic toast notifications that stack with 3D depth, scale down behind each other, and auto-dismiss.",
+          "tags": ["toast", "notification", "stack", "depth"]
+        }
+      ]
+    },
+    {
+      "id": "typography-numbers",
+      "name": "Typography & Counters",
+      "description": "Staggered letter reveals, text scrambles, and rolling animated spring counters",
+      "components": [
+        {
+          "name": "SplitTextReveal",
+          "category": "typography-numbers",
+          "file": "components/motion/typography/SplitTextReveal.tsx",
+          "description": "Splits text into individual characters and cascades them in with staggered spring delays.",
+          "tags": ["typography", "split-text", "stagger", "reveal"]
+        },
+        {
+          "name": "NumberTicker",
+          "category": "typography-numbers",
+          "file": "components/motion/typography/NumberTicker.tsx",
+          "description": "Smoothly rolls and interpolates from initial number to target value with spring physics.",
+          "tags": ["number", "counter", "ticker", "interpolate"]
+        },
+        {
+          "name": "ScrollProgressScrubber",
+          "category": "typography-numbers",
+          "file": "components/motion/scroll/ScrollProgressScrubber.tsx",
+          "description": "Scroll-driven progress bar that tracks viewport reading position using useScroll & useSpring.",
+          "tags": ["scroll", "progress", "reading", "indicator"]
         }
       ]
     }
