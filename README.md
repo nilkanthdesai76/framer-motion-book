@@ -60,12 +60,12 @@ Every component in this handbook strictly respects the user's OS motion settings
 
 ## 📚 Complete Documentation
 
-- 📋 [PRD.md](PRD.md) — Product requirements, pattern specifications, and copy-paste recipes
-- 🏗️ [ARCHITECTURE.md](ARCHITECTURE.md) — System taxonomy, FLIP layout pipeline, and lifecycle sequence diagrams
+- 📋 [PRD.md](docs/PRD.md) — Product requirements, pattern specifications, and copy-paste recipes
+- 🏗️ [ARCHITECTURE.md](docs/ARCHITECTURE.md) — System taxonomy, FLIP layout pipeline, and lifecycle sequence diagrams
 - 🤖 [AGENTS.md](AGENTS.md) — Operational guidelines, build commands, and Framer Motion invariants
-- 🎨 [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) — Spring physics constants, timing curves, and elevation tokens
-- 🧪 [TESTING.md](TESTING.md) — Vitest and React Testing Library animation mock patterns
-- 🔒 [SECURITY.md](SECURITY.md) — Client-side text sanitization and SVG path safety guidelines
+- 🎨 [DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) — Spring physics constants, timing curves, and elevation tokens
+- 🧪 [TESTING.md](docs/TESTING.md) — Vitest and React Testing Library animation mock patterns
+- 🔒 [SECURITY.md](docs/SECURITY.md) — Client-side text sanitization and SVG path safety guidelines
 
 ---
 
