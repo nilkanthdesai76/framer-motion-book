@@ -8,10 +8,22 @@ import {
   smoothSpring,
   crispSpring
 } from '../../tokens/springs.ts';
+import { BookServer } from '../server/bookServer.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 async function main() {
+  const args = process.argv.slice(2);
+  const command = args[0] || 'serve';
+
+  if (command === 'serve') {
+    const port = Number(args[1]) || 4041;
+    const server = new BookServer(port);
+    await server.start();
+    console.log(`\u001B[1;32m✨ Framer Motion Handbook Dashboard running at: http://127.0.0.1:${port}\u001B[0m`);
+    console.log(`Press Ctrl+C to terminate server.\n`);
+    return;
+  }
   console.log('\u001B[2J\u001B[H'); // Clear screen
   console.log(`\u001B[1;35m=========================================================================\u001B[0m`);
   console.log(`\u001B[1;32m         🪄 Framer Motion Handbook — UI Motion & Animation Recipes       \u001B[0m`);

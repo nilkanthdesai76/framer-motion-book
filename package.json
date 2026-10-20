@@ -9,7 +9,8 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "node --experimental-strip-types src/cli/demo.ts",
+    "dev": "node --experimental-strip-types src/cli/demo.ts serve",
+    "serve": "node --experimental-strip-types src/cli/demo.ts serve",
     "start": "node --experimental-strip-types src/cli/demo.ts",
     "build": "tsc",
     "test": "node --experimental-strip-types --test tests/**/*.test.ts",
