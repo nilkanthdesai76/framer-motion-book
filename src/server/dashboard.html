@@ -455,6 +455,39 @@
       border-color: rgba(255, 255, 255, 0.25);
       transform: translateY(-2px);
     }
+  
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(16,185,129,0.3); }
+      50% { box-shadow: 0 0 25px rgba(16,185,129,0.7); }
+    }
+    @keyframes rotateLight {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes bounceWave {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+    @keyframes gradRotate {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes heartbeatAnim {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.25); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.2); }
+    }
+    @keyframes blinkCursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
   </style>
 </head>
 <body>
@@ -686,63 +719,247 @@
       renderGrid();
     }
 
-    function renderPreviewContent(item) {
+        function renderPreviewContent(item) {
       const type = item.previewType;
+      const title = item.title;
 
-      if (type === 'magnetic' || type === 'shimmer' || type === 'pulse' || type === 'button') {
-        return `<button class="demo-interactive-btn"><span>⚡</span><span>${item.title}</span></button>`;
+      // 1. BUTTONS & CTAS
+      if (type === 'shimmer') {
+        return `<button class="demo-interactive-btn" style="position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.2);"><div style="position:absolute; inset:-50%; width:200%; height:200%; background:conic-gradient(transparent, transparent, #06b6d4, transparent); animation:rotateLight 2.5s linear infinite;"></div><span style="position:relative; z-index:1; display:flex; align-items:center; gap:6px;">✨ ${title}</span></button>`;
       }
-      if (type === 'tabs' || type === 'segmented') {
-        return `
-          <div style="background:rgba(255,255,255,0.06); padding:4px; border-radius:12px; display:flex; gap:4px;">
-            <div style="background:var(--accent); padding:6px 14px; border-radius:8px; font-size:11px; font-weight:700; color:#fff;">Active</div>
-            <div style="padding:6px 14px; font-size:11px; font-weight:600; color:var(--text-muted);">Tokens</div>
-            <div style="padding:6px 14px; font-size:11px; font-weight:600; color:var(--text-muted);">Export</div>
-          </div>
-        `;
+      if (type === 'magnetic' || type === 'button') {
+        return `<button class="demo-interactive-btn" style="background:linear-gradient(135deg, #6366f1, #a855f7); box-shadow:0 6px 18px rgba(99,102,241,0.4);"><span>🧲</span><span>${title}</span></button>`;
+      }
+      if (type === 'pulse') {
+        return `<button class="demo-interactive-btn" style="background:#10b981; animation:pulseGlow 2s infinite; box-shadow:0 0 20px rgba(16,185,129,0.5);"><span>🟢</span><span>${title}</span></button>`;
+      }
+      if (type === 'liquid' || type === 'liquidfill') {
+        return `<div style="position:relative; width:150px; height:42px; border-radius:10px; border:1px solid #38bdf8; overflow:hidden; display:flex; align-items:center; justify-content:center; background:#0c1a2e;"><div style="position:absolute; bottom:0; width:100%; height:60%; background:linear-gradient(180deg, #38bdf8, #0284c7); opacity:0.75; border-radius:6px;"></div><span style="position:relative; z-index:1; font-size:11.5px; font-weight:700; color:#fff;">🌊 ${title}</span></div>`;
+      }
+      if (type === 'ripple') {
+        return `<button class="demo-interactive-btn" style="background:#0f172a; border:1px solid #3b82f6;"><span>💧</span><span>${title}</span></button>`;
+      }
+      if (type === 'push3d') {
+        return `<button class="demo-interactive-btn" style="background:#3b82f6; box-shadow:0 6px 0 #1d4ed8; transform:translateY(-2px);"><span>🕹️</span><span>${title}</span></button>`;
+      }
+      if (type === 'confetti' || type === 'confettiblast') {
+        return `<div style="position:relative; display:flex; align-items:center; justify-content:center;"><button class="demo-interactive-btn" style="background:#ec4899;"><span>🎉</span><span>${title}</span></button><div style="position:absolute; top:-10px; display:flex; gap:14px; font-size:12px;"><span>✨</span><span>🎊</span><span>🎈</span></div></div>`;
+      }
+      if (type === 'glitch') {
+        return `<button class="demo-interactive-btn" style="background:#000; border:1px solid #f43f5e; color:#f43f5e; text-shadow:-2px 0 #06b6d4, 2px 0 #f43f5e;"><span>⚡</span><span>${title}</span></button>`;
+      }
+      if (type === 'holdconfirm') {
+        return `<div style="position:relative; width:160px; height:38px; border-radius:10px; background:#1c1017; border:1px solid #f43f5e; overflow:hidden; display:flex; align-items:center; justify-content:center;"><div style="position:absolute; left:0; top:0; bottom:0; width:45%; background:#f43f5e; opacity:0.8;"></div><span style="position:relative; z-index:1; font-size:11px; font-weight:700; color:#fff;">⏳ Hold to Confirm</span></div>`;
+      }
+      if (type === 'unlock') {
+        return `<div style="width:170px; height:36px; border-radius:18px; background:#0f2017; border:1px solid #10b981; padding:3px; display:flex; align-items:center; position:relative;"><div style="width:28px; height:28px; border-radius:50%; background:#10b981; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px; margin-left:30px; box-shadow:0 0 10px #10b981;">➔</div><span style="font-size:10px; color:#6ee7b7; font-weight:700; margin-left:10px;">Slide to unlock</span></div>`;
+      }
+      if (type === 'stars') {
+        return `<div style="display:flex; gap:6px; font-size:22px; color:#facc15; filter:drop-shadow(0 0 8px rgba(250,204,21,0.5));"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>`;
+      }
+      if (type === 'download' || type === 'beamprogress') {
+        return `<div style="width:170px; background:#131824; border:1px solid var(--border); border-radius:8px; padding:8px 12px;"><div style="display:flex; justify-content:space-between; font-size:10.5px; font-weight:700; color:#fff; margin-bottom:5px;"><span>Downloading</span><span style="color:var(--cyan);">68%</span></div><div style="height:6px; background:#1e293b; border-radius:3px; overflow:hidden;"><div style="width:68%; height:100%; background:linear-gradient(90deg, var(--accent), var(--cyan)); border-radius:3px;"></div></div></div>`;
+      }
+      if (type === 'audiowave' || type === 'audiocard') {
+        return `<div style="display:flex; align-items:flex-end; gap:4px; height:36px; padding:0 10px;"><div style="width:4px; height:18px; background:#38bdf8; border-radius:2px; animation:bounceWave 1s infinite alternate;"></div><div style="width:4px; height:32px; background:#6366f1; border-radius:2px; animation:bounceWave 0.7s infinite alternate 0.1s;"></div><div style="width:4px; height:14px; background:#ec4899; border-radius:2px; animation:bounceWave 1.1s infinite alternate 0.2s;"></div><div style="width:4px; height:28px; background:#a855f7; border-radius:2px; animation:bounceWave 0.8s infinite alternate 0.3s;"></div><div style="width:4px; height:20px; background:#38bdf8; border-radius:2px; animation:bounceWave 0.9s infinite alternate 0.4s;"></div><div style="width:4px; height:12px; background:#10b981; border-radius:2px; animation:bounceWave 0.6s infinite alternate 0.5s;"></div></div>`;
+      }
+      if (type === 'foil') {
+        return `<button class="demo-interactive-btn" style="background:linear-gradient(135deg, #f43f5e, #fb923c, #facc15, #06b6d4, #a855f7); background-size:300% 300%; animation:gradRotate 4s ease infinite; color:#fff;"><span>🌈</span><span>${title}</span></button>`;
+      }
+      if (type === 'heartbeat') {
+        return `<div style="font-size:36px; color:#f43f5e; animation:heartbeatAnim 1.2s infinite; filter:drop-shadow(0 0 12px rgba(244,63,94,0.6));">❤️</div>`;
+      }
+
+      // 2. NAVIGATION & HEADERS
+      if (type === 'tabs' || type === 'tabunderline') {
+        return `<div style="background:rgba(255,255,255,0.06); padding:4px; border-radius:12px; display:flex; gap:4px; border:1px solid var(--border);"><div style="background:linear-gradient(135deg, var(--accent), var(--purple)); padding:6px 14px; border-radius:8px; font-size:11px; font-weight:700; color:#fff; box-shadow:0 2px 8px var(--accent-glow);">Active</div><div style="padding:6px 12px; font-size:11px; font-weight:600; color:var(--text-muted);">Physics</div><div style="padding:6px 12px; font-size:11px; font-weight:600; color:var(--text-muted);">Tokens</div></div>`;
       }
       if (type === 'dock') {
-        return `
-          <div style="display:flex; gap:8px; background:rgba(255,255,255,0.06); padding:8px 14px; border-radius:18px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#0284c7; display:flex; align-items:center; justify-content:center; font-size:14px;">📁</div>
-            <div style="width:32px; height:32px; border-radius:8px; background:#10b981; display:flex; align-items:center; justify-content:center; font-size:14px;">🌐</div>
-            <div style="width:32px; height:32px; border-radius:8px; background:#6366f1; display:flex; align-items:center; justify-content:center; font-size:14px;">⚡</div>
-            <div style="width:32px; height:32px; border-radius:8px; background:#f43f5e; display:flex; align-items:center; justify-content:center; font-size:14px;">🎵</div>
-          </div>
-        `;
+        return `<div style="display:flex; gap:8px; background:rgba(255,255,255,0.06); padding:8px 14px; border-radius:20px; border:1px solid var(--border);"><div style="width:34px; height:34px; border-radius:9px; background:#0284c7; display:flex; align-items:center; justify-content:center; font-size:15px; box-shadow:0 4px 10px rgba(0,0,0,0.4);">📁</div><div style="width:42px; height:42px; border-radius:10px; background:#10b981; display:flex; align-items:center; justify-content:center; font-size:18px; transform:translateY(-4px); box-shadow:0 6px 14px rgba(0,0,0,0.5);">🌐</div><div style="width:34px; height:34px; border-radius:9px; background:#6366f1; display:flex; align-items:center; justify-content:center; font-size:15px; box-shadow:0 4px 10px rgba(0,0,0,0.4);">⚡</div><div style="width:34px; height:34px; border-radius:9px; background:#f43f5e; display:flex; align-items:center; justify-content:center; font-size:15px; box-shadow:0 4px 10px rgba(0,0,0,0.4);">🎵</div></div>`;
       }
       if (type === 'island') {
-        return `
-          <div style="background:#000; border:1px solid rgba(255,255,255,0.15); border-radius:20px; padding:6px 16px; display:flex; align-items:center; gap:8px;">
-            <span>🎧</span><span style="font-size:11px; font-weight:700; color:#fff;">Notchy Live Pill</span>
-          </div>
-        `;
+        return `<div style="background:#000; border:1px solid rgba(255,255,255,0.18); border-radius:22px; padding:6px 16px; display:flex; align-items:center; gap:10px; box-shadow:0 8px 24px rgba(0,0,0,0.8);"><span style="font-size:14px;">🎧</span><div><div style="font-size:11px; font-weight:800; color:#fff;">Live Island</div><div style="font-size:9.5px; color:var(--accent);">M83 • Midnight</div></div></div>`;
       }
-      if (type === 'modal' || type === 'dialog') {
-        return `
-          <div style="background:#141724; border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:14px; text-align:center; width:180px; box-shadow:0 10px 30px rgba(0,0,0,0.6);">
-            <span style="font-size:20px;">🎉</span>
-            <div style="font-size:11px; font-weight:700; color:#fff; margin-top:4px;">Spring Dialog</div>
-          </div>
-        `;
+      if (type === 'segmented') {
+        return `<div style="background:#131722; padding:3px; border-radius:8px; display:flex; border:1px solid var(--border);"><div style="background:#fff; color:#000; padding:5px 12px; border-radius:6px; font-size:11px; font-weight:800; box-shadow:0 2px 6px rgba(0,0,0,0.3);">Daily</div><div style="color:var(--text-muted); padding:5px 12px; font-size:11px; font-weight:600;">Weekly</div><div style="color:var(--text-muted); padding:5px 12px; font-size:11px; font-weight:600;">Monthly</div></div>`;
       }
-      if (type === 'toast' || type === 'toastqueue') {
-        return `
-          <div style="display:flex; flex-direction:column; gap:6px; width:200px;">
-            <div style="background:#1e1b4b; border:1px solid #6366f1; border-radius:8px; padding:6px 12px; font-size:11px; color:#fff; font-weight:700;">✅ Build Succeeded</div>
-            <div style="background:#0f172a; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:6px 12px; font-size:11px; color:var(--text-muted); transform:scale(0.95);">📦 Assets Packed</div>
-          </div>
-        `;
+      if (type === 'breadcrumbs') {
+        return `<div style="display:flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600;"><span style="color:var(--text-dim);">Workspace</span><span style="color:var(--text-dim);">›</span><span style="color:var(--text-dim);">Projects</span><span style="color:var(--text-dim);">›</span><span style="color:var(--cyan); font-weight:700;">Framer Book</span></div>`;
+      }
+      if (type === 'dots') {
+        return `<div style="display:flex; gap:6px; align-items:center;"><div style="width:24px; height:8px; border-radius:4px; background:var(--accent); box-shadow:0 0 10px var(--accent-glow);"></div><div style="width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.2);"></div><div style="width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.2);"></div><div style="width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.2);"></div></div>`;
+      }
+      if (type === 'scrollnav' || type === 'stickyheader') {
+        return `<div style="width:200px; background:rgba(18,22,34,0.85); backdrop-filter:blur(10px); border:1px solid var(--border); border-radius:10px; padding:8px 14px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:11px; font-weight:800; color:#fff;">⚡ Navbar</span><span style="font-size:9.5px; color:var(--emerald); background:rgba(16,185,129,0.15); padding:2px 6px; border-radius:4px;">Pinned</span></div>`;
+      }
+      if (type === 'cmdpalette') {
+        return `<div style="width:200px; background:#0d111a; border:1px solid #3b82f6; border-radius:10px; padding:8px 12px; display:flex; align-items:center; justify-content:space-between;"><div style="display:flex; align-items:center; gap:6px;"><span style="font-size:12px;">🔍</span><span style="font-size:11px; color:#fff;">Search files...</span></div><span style="font-size:9px; background:#1e293b; padding:2px 5px; border-radius:4px; color:var(--text-muted);">⌘K</span></div>`;
       }
 
-      // Default rich animated preview widget
-      return `
-        <div class="demo-interactive-card">
-          <span style="font-size:22px; display:block; margin-bottom:4px;">✨</span>
-          <span style="font-size:12px; font-weight:700; color:#fff;">${item.name}</span>
-          <span style="font-size:10px; color:var(--cyan); display:block; margin-top:4px;">Interactive Motion Canvas</span>
-        </div>
-      `;
+      // 3. CARDS & 3D SURFACES
+      if (type === 'tiltcard' || type === 'depthcard') {
+        return `<div class="demo-interactive-card" style="transform:rotateX(14deg) rotateY(-14deg); background:linear-gradient(135deg, rgba(99,102,241,0.2), rgba(236,72,153,0.25)); border:1px solid rgba(255,255,255,0.2); box-shadow:0 12px 30px rgba(0,0,0,0.6);"><span style="font-size:18px;">💎</span><div style="font-size:12px; font-weight:800; color:#fff; margin-top:4px;">3D Perspective</div><span style="font-size:10px; color:#a5b4fc;">Gyroscopic Depth</span></div>`;
+      }
+      if (type === 'spotlight') {
+        return `<div class="demo-interactive-card" style="position:relative; background:#0f121d; border:1px solid rgba(255,255,255,0.12); overflow:hidden;"><div style="position:absolute; inset:0; background:radial-gradient(circle at 60% 40%, rgba(99,102,241,0.3) 0%, transparent 60%);"></div><span style="font-size:18px; position:relative;">🔦</span><div style="font-size:12px; font-weight:800; color:#fff; position:relative;">Spotlight Halo</div></div>`;
+      }
+      if (type === 'flipcard' || type === 'flip3d') {
+        return `<div class="demo-interactive-card" style="background:#1e1b4b; border:1px solid #6366f1;"><span style="font-size:18px;">🔄</span><div style="font-size:12px; font-weight:800; color:#fff; margin-top:4px;">Double-Sided Flip</div><span style="font-size:10px; color:var(--cyan);">Tap to flip 180°</span></div>`;
+      }
+      if (type === 'borderbeam') {
+        return `<div class="demo-interactive-card" style="position:relative; overflow:hidden; background:#0d1117; border:1px solid #38bdf8;"><span style="font-size:18px;">⚡</span><div style="font-size:12px; font-weight:800; color:#fff; margin-top:4px;">Neon Border Beam</div><span style="font-size:10px; color:#38bdf8;">Orbiting Laser</span></div>`;
+      }
+      if (type === 'gitcard') {
+        return `<div style="width:200px; background:#0f172a; border:1px solid #334155; border-radius:10px; padding:10px;"><div style="display:flex; align-items:center; gap:8px;"><div style="width:10px; height:10px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></div><span style="font-size:11px; font-weight:700; color:#fff;">feat: spring engine</span></div><span style="font-size:9.5px; color:var(--text-dim); margin-top:4px; display:block;">commit 707f2d7 • 3m ago</span></div>`;
+      }
+      if (type === 'weathercard') {
+        return `<div style="width:190px; background:linear-gradient(135deg, #1e3a8a, #0369a1); border-radius:12px; padding:10px 14px; color:#fff;"><div style="display:flex; justify-content:space-between; align-items:center;"><span style="font-size:24px;">⛈️</span><span style="font-size:20px; font-weight:800;">22°</span></div><div style="font-size:11px; font-weight:600; margin-top:2px;">Thunderstorm • Rain 85%</div></div>`;
+      }
+      if (type === 'stockcard') {
+        return `<div style="width:190px; background:#111827; border:1px solid var(--border); border-radius:10px; padding:10px;"><div style="display:flex; justify-content:space-between;"><span style="font-size:11.5px; font-weight:800; color:#fff;">AAPL</span><span style="font-size:11.5px; font-weight:800; color:var(--emerald);">+4.2%</span></div><div style="font-size:16px; font-weight:900; color:#fff; margin-top:2px;">$234.80</div></div>`;
+      }
+
+      // 4. MODALS & DRAWERS
+      if (type === 'modal' || type === 'dialog' || type === 'alertdialog') {
+        return `<div style="background:#141724; border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:14px; text-align:center; width:180px; box-shadow:0 12px 32px rgba(0,0,0,0.7);"><span style="font-size:22px;">🎉</span><div style="font-size:11.5px; font-weight:800; color:#fff; margin-top:4px;">Spring Dialog</div><span style="font-size:9.5px; color:var(--text-muted);">Backdrop blurred</span></div>`;
+      }
+      if (type === 'bottomsheet') {
+        return `<div style="width:190px; background:#161c2e; border:1px solid var(--border); border-radius:16px 16px 0 0; padding:8px 12px 14px; text-align:center;"><div style="width:36px; height:4px; border-radius:2px; background:#475569; margin:0 auto 8px;"></div><span style="font-size:11px; font-weight:700; color:#fff;">Drag to Snap</span></div>`;
+      }
+      if (type === 'toast' || type === 'toastqueue') {
+        return `<div style="display:flex; flex-direction:column; gap:5px; width:190px;"><div style="background:#1e1b4b; border:1px solid #6366f1; border-radius:8px; padding:6px 10px; font-size:10.5px; color:#fff; font-weight:700; display:flex; align-items:center; gap:6px;"><span>✅</span><span>Build Succeeded</span></div><div style="background:#0f172a; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:6px 10px; font-size:10px; color:var(--text-dim); transform:scale(0.95);">📦 Assets Packed</div></div>`;
+      }
+      if (type === 'tooltip') {
+        return `<div style="position:relative; display:flex; flex-direction:column; align-items:center;"><div style="background:var(--accent); color:#fff; font-size:10.5px; font-weight:700; padding:4px 10px; border-radius:6px; box-shadow:0 4px 12px var(--accent-glow);">Spring Tooltip</div><div style="width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-top:5px solid var(--accent);"></div><div style="margin-top:4px; font-size:11px; color:var(--text-muted);">Hovered anchor</div></div>`;
+      }
+
+      // 5. FEEDBACK & STATUS
+      if (type === 'checkmark') {
+        return `<div style="width:44px; height:44px; border-radius:50%; background:rgba(16,185,129,0.15); border:2px solid #10b981; display:flex; align-items:center; justify-content:center; color:#10b981; font-size:22px; font-weight:900; box-shadow:0 0 16px rgba(16,185,129,0.4);">✓</div>`;
+      }
+      if (type === 'battery') {
+        return `<div style="display:flex; align-items:center; gap:2px;"><div style="width:50px; height:26px; border:2px solid #10b981; border-radius:6px; padding:2px; display:flex; gap:2px;"><div style="flex:1; background:#10b981; border-radius:2px;"></div><div style="flex:1; background:#10b981; border-radius:2px;"></div><div style="flex:1; background:#10b981; border-radius:2px;"></div></div><div style="width:3px; height:10px; background:#10b981; border-radius:0 2px 2px 0;"></div><span style="font-size:14px; margin-left:6px;">⚡</span></div>`;
+      }
+      if (type === 'wifi') {
+        return `<div style="font-size:32px; color:var(--cyan); filter:drop-shadow(0 0 10px rgba(6,182,212,0.6));">📶</div>`;
+      }
+      if (type === 'pingdot') {
+        return `<div style="display:flex; align-items:center; gap:8px;"><div style="width:12px; height:12px; border-radius:50%; background:#10b981; box-shadow:0 0 12px #10b981; animation:pulseGlow 1.5s infinite;"></div><span style="font-size:12px; font-weight:700; color:#fff;">Live System Online</span></div>`;
+      }
+      if (type === 'typingdots') {
+        return `<div style="display:flex; gap:5px; background:#1e293b; padding:10px 16px; border-radius:14px;"><div style="width:8px; height:8px; border-radius:50%; background:#38bdf8; animation:bounceWave 0.6s infinite alternate;"></div><div style="width:8px; height:8px; border-radius:50%; background:#38bdf8; animation:bounceWave 0.6s infinite alternate 0.2s;"></div><div style="width:8px; height:8px; border-radius:50%; background:#38bdf8; animation:bounceWave 0.6s infinite alternate 0.4s;"></div></div>`;
+      }
+
+      // 6. TYPOGRAPHY & TEXT
+      if (type === 'terminal') {
+        return `<div style="width:210px; background:#000; border:1px solid #10b981; border-radius:8px; padding:10px; font-family:'JetBrains Mono', monospace;"><span style="color:#10b981; font-size:11px;">$ git commit -m "fix"<span style="animation:blinkCursor 1s infinite;">_</span></span></div>`;
+      }
+      if (type === 'numberticker' || type === 'currencycount') {
+        return `<div style="font-family:'JetBrains Mono', monospace; font-size:26px; font-weight:900; color:var(--emerald); text-shadow:0 0 12px rgba(16,185,129,0.4);">$1,420.00</div>`;
+      }
+      if (type === 'splittext') {
+        return `<div style="display:flex; gap:4px; font-size:24px; font-weight:900; color:#fff;"><span style="color:var(--accent);">M</span><span>O</span><span style="color:var(--purple);">T</span><span>I</span><span style="color:var(--cyan);">O</span><span>N</span></div>`;
+      }
+      if (type === 'textshimmer') {
+        return `<div style="font-size:20px; font-weight:900; background:linear-gradient(90deg, #fff 0%, var(--cyan) 50%, #fff 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-size:200% auto; animation:gradRotate 3s linear infinite;">SHIMMER TEXT</div>`;
+      }
+      if (type === 'neontext') {
+        return `<div style="font-size:20px; font-weight:900; color:#f43f5e; text-shadow:0 0 8px #f43f5e, 0 0 20px #f43f5e;">NEON GLOW</div>`;
+      }
+
+      // 7. SCROLL & GESTURES
+      if (type === 'swipedismiss') {
+        return `<div style="width:190px; background:#1e1b4b; border:1px solid #6366f1; border-radius:10px; padding:8px 12px; cursor:grab; box-shadow:0 6px 18px rgba(0,0,0,0.5);"><span style="font-size:11px; font-weight:700; color:#fff;">Swipe to Dismiss ➔</span></div>`;
+      }
+      if (type === 'rotarydial') {
+        return `<div style="width:48px; height:48px; border-radius:50%; background:#1e293b; border:3px solid var(--accent); position:relative; box-shadow:0 0 12px var(--accent-glow);"><div style="position:absolute; top:6px; left:50%; width:3px; height:12px; background:#fff; transform:translateX(-50%); border-radius:2px;"></div></div>`;
+      }
+
+      // 8. LOADERS & SPINNERS
+      if (type === 'springspinner' || type === 'dashedspinner') {
+        return `<div style="width:36px; height:36px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--accent); border-right-color:var(--purple); border-radius:50%; animation:spin 0.8s linear infinite;"></div>`;
+      }
+      if (type === 'dnahelix') {
+        return `<div style="display:flex; gap:6px; font-size:18px;"><span style="color:#38bdf8; animation:bounceWave 1s infinite alternate;">🧬</span><span style="color:#ec4899; animation:bounceWave 1s infinite alternate 0.3s;">🧬</span><span style="color:#10b981; animation:bounceWave 1s infinite alternate 0.6s;">🧬</span></div>`;
+      }
+      if (type === 'arcadeloader') {
+        return `<div style="display:flex; align-items:center; gap:8px; font-size:20px;"><span>🟡</span><span>•</span><span>•</span><span>•</span><span>👻</span></div>`;
+      }
+      if (type === 'hourglass') {
+        return `<div style="font-size:30px; animation:spin 2.5s infinite ease-in-out;">⏳</div>`;
+      }
+
+      // 9. DATA & CHARTS
+      if (type === 'barchart') {
+        return `<div style="display:flex; align-items:flex-end; gap:6px; height:40px;"><div style="width:12px; height:18px; background:#38bdf8; border-radius:3px 3px 0 0;"></div><div style="width:12px; height:36px; background:#6366f1; border-radius:3px 3px 0 0;"></div><div style="width:12px; height:24px; background:#a855f7; border-radius:3px 3px 0 0;"></div><div style="width:12px; height:38px; background:#ec4899; border-radius:3px 3px 0 0;"></div><div style="width:12px; height:28px; background:#10b981; border-radius:3px 3px 0 0;"></div></div>`;
+      }
+      if (type === 'donutchart' || type === 'activityrings') {
+        return `<div style="position:relative; width:44px; height:44px; border:4px solid #38bdf8; border-top-color:#ec4899; border-right-color:#facc15; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9.5px; font-weight:800; color:#fff;">75%</div>`;
+      }
+      if (type === 'candlestick') {
+        return `<div style="display:flex; gap:10px; align-items:center;"><div style="display:flex; flex-direction:column; align-items:center;"><div style="width:2px; height:8px; background:#10b981;"></div><div style="width:8px; height:20px; background:#10b981; border-radius:1px;"></div><div style="width:2px; height:8px; background:#10b981;"></div></div><div style="display:flex; flex-direction:column; align-items:center;"><div style="width:2px; height:6px; background:#ef4444;"></div><div style="width:8px; height:24px; background:#ef4444; border-radius:1px;"></div><div style="width:2px; height:6px; background:#ef4444;"></div></div><div style="display:flex; flex-direction:column; align-items:center;"><div style="width:2px; height:10px; background:#10b981;"></div><div style="width:8px; height:16px; background:#10b981; border-radius:1px;"></div><div style="width:2px; height:6px; background:#10b981;"></div></div></div>`;
+      }
+
+      // 10. FORM CONTROLS
+      if (type === 'floatinglabel') {
+        return `<div style="position:relative; width:180px;"><div style="position:absolute; top:-7px; left:10px; background:#090b12; padding:0 4px; font-size:9px; color:var(--accent); font-weight:700;">Email Address</div><div style="border:1px solid var(--accent); border-radius:8px; padding:8px 12px; font-size:11px; color:#fff;">user@company.com</div></div>`;
+      }
+      if (type === 'passwordbar') {
+        return `<div style="width:170px;"><div style="font-size:10.5px; color:#fff; font-weight:700; margin-bottom:4px;">••••••••••••</div><div style="display:flex; gap:4px; height:4px;"><div style="flex:1; background:#10b981; border-radius:2px;"></div><div style="flex:1; background:#10b981; border-radius:2px;"></div><div style="flex:1; background:#10b981; border-radius:2px;"></div><div style="flex:1; background:#334155; border-radius:2px;"></div></div></div>`;
+      }
+      if (type === 'otpboxes') {
+        return `<div style="display:flex; gap:6px;"><div style="width:26px; height:32px; border:1px solid var(--border); border-radius:6px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:13px; background:#161c2e;">4</div><div style="width:26px; height:32px; border:1px solid var(--border); border-radius:6px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:13px; background:#161c2e;">2</div><div style="width:26px; height:32px; border:2px solid var(--accent); border-radius:6px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:13px; background:#161c2e; box-shadow:0 0 8px var(--accent-glow);">9</div><div style="width:26px; height:32px; border:1px solid var(--border); border-radius:6px; display:flex; align-items:center; justify-content:center; color:var(--text-dim); font-size:13px; background:#161c2e;">-</div></div>`;
+      }
+      if (type === 'creditcard') {
+        return `<div style="width:160px; height:90px; border-radius:10px; background:linear-gradient(135deg, #1e1b4b, #431407); border:1px solid rgba(255,255,255,0.2); padding:10px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 8px 20px rgba(0,0,0,0.6);"><div style="display:flex; justify-content:space-between; font-size:10px; color:#fde047; font-weight:800;"><span>CHIP</span><span>VISA</span></div><div style="font-size:10px; font-family:'JetBrains Mono', monospace; color:#fff;">•••• 4242</div></div>`;
+      }
+      if (type === 'checkbox') {
+        return `<div style="display:flex; align-items:center; gap:8px;"><div style="width:22px; height:22px; border-radius:6px; background:var(--accent); display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:900; box-shadow:0 0 10px var(--accent-glow);">✓</div><span style="font-size:11.5px; font-weight:700; color:#fff;">Checked State</span></div>`;
+      }
+      if (type === 'sliderbubble') {
+        return `<div style="position:relative; width:160px; padding-top:16px;"><div style="position:absolute; top:0; left:65%; transform:translateX(-50%); background:var(--cyan); color:#000; font-size:9.5px; font-weight:800; padding:2px 6px; border-radius:4px;">65%</div><div style="height:6px; background:#1e293b; border-radius:3px; position:relative;"><div style="width:65%; height:100%; background:var(--cyan); border-radius:3px;"></div><div style="position:absolute; top:-4px; left:65%; transform:translateX(-50%); width:14px; height:14px; border-radius:50%; background:#fff; box-shadow:0 0 8px rgba(0,0,0,0.5);"></div></div></div>`;
+      }
+      if (type === 'dropzone') {
+        return `<div style="width:180px; padding:12px; border:2px dashed #3b82f6; border-radius:10px; background:rgba(59,130,246,0.06); text-align:center;"><span style="font-size:18px;">☁️</span><div style="font-size:10.5px; font-weight:700; color:#fff; margin-top:2px;">Drop files here</div></div>`;
+      }
+
+      // Default distinct fallbacks by category
+      const cat = item.category;
+      if (cat === 'buttons-ctas') {
+        return `<button class="demo-interactive-btn" style="background:linear-gradient(135deg, #f43f5e, #fb923c);"><span>⚡</span><span>${title}</span></button>`;
+      }
+      if (cat === 'navigation-headers') {
+        return `<div style="background:rgba(255,255,255,0.05); padding:6px 14px; border-radius:12px; border:1px solid var(--border); font-size:11px; font-weight:700; color:#38bdf8;">🧭 ${title}</div>`;
+      }
+      if (cat === 'cards-3d') {
+        return `<div class="demo-interactive-card"><span style="font-size:20px;">🃏</span><div style="font-size:11.5px; font-weight:800; color:#fff; margin-top:4px;">${title}</div></div>`;
+      }
+      if (cat === 'modals-overlays') {
+        return `<div style="background:#131722; border:1px solid var(--accent); padding:10px 16px; border-radius:10px; font-size:11px; font-weight:700; color:#fff; box-shadow:0 4px 14px var(--accent-glow);">🪟 ${title}</div>`;
+      }
+      if (cat === 'feedback-status') {
+        return `<div style="display:flex; align-items:center; gap:6px; background:#064e3b; border:1px solid #10b981; padding:6px 12px; border-radius:8px; font-size:11px; font-weight:700; color:#6ee7b7;"><span>🔔</span><span>${title}</span></div>`;
+      }
+      if (cat === 'typography-text') {
+        return `<div style="font-size:16px; font-weight:900; letter-spacing:1px; color:#fbcfe8; text-shadow:0 0 10px rgba(244,63,94,0.4);">Aa • ${title}</div>`;
+      }
+      if (cat === 'scroll-driven') {
+        return `<div style="width:170px; background:#1e293b; border-radius:6px; padding:6px 10px; display:flex; justify-content:space-between; font-size:10px; font-weight:700; color:#38bdf8;"><span>📜 Scroll Active</span><span>80%</span></div>`;
+      }
+      if (cat === 'gestures-touch') {
+        return `<div style="background:#2e1065; border:1px solid #8b5cf6; padding:8px 14px; border-radius:10px; font-size:11px; font-weight:700; color:#c4b5fd;">👆 ${title}</div>`;
+      }
+      if (cat === 'loaders-spinners') {
+        return `<div style="display:flex; align-items:center; gap:8px;"><div style="width:20px; height:20px; border:2px solid #38bdf8; border-top-color:transparent; border-radius:50%; animation:spin 0.7s linear infinite;"></div><span style="font-size:11px; font-weight:700; color:#fff;">Loading...</span></div>`;
+      }
+      if (cat === 'data-charts') {
+        return `<div style="display:flex; align-items:flex-end; gap:4px; height:32px;"><div style="width:10px; height:12px; background:#38bdf8; border-radius:2px;"></div><div style="width:10px; height:28px; background:#6366f1; border-radius:2px;"></div><div style="width:10px; height:20px; background:#ec4899; border-radius:2px;"></div><span style="font-size:10px; color:var(--text-muted); margin-left:4px;">Stats</span></div>`;
+      }
+      if (cat === 'form-controls') {
+        return `<div style="border:1px solid #475569; border-radius:8px; padding:6px 12px; font-size:10.5px; color:var(--text-muted); background:#0f172a;">📝 ${title}</div>`;
+      }
+
+      return `<div class="demo-interactive-card"><span style="font-size:18px;">✨</span><div style="font-size:11.5px; font-weight:700; color:#fff;">${title}</div></div>`;
     }
 
     function handleInteractiveStage(e, stage) {
